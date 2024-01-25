@@ -32,9 +32,9 @@
     "@emotion/styled": "^10.0.27",
     "@nypl/design-system-react-components": "^0.7.2",
     "@nypl/dgx-svg-icons": "^0.3.12",
-    "@theme-ui/color": "^0.6.2",
-    "@theme-ui/components": "^0.6.2",
-    "@theme-ui/match-media": "^0.6.2",
+    "@theme-ui/color": "^0.16.1",
+    "@theme-ui/components": "^0.16.1",
+    "@theme-ui/match-media": "^0.16.1",
     "@zeit/next-source-maps": "0.0.3",
     "chalk": "^4.1.0",
     "deepmerge": "^4.2.2",
@@ -60,7 +60,7 @@
     "request": "^2.88.2",
     "styled-system": "^5.1.2",
     "swr": "^0.3.2",
-    "theme-ui": "^0.6.2",
+    "theme-ui": "^0.16.1",
     "tslib": "^2.3.0"
   },
   "optionalDependencies": {
