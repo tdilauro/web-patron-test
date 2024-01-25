@@ -35,6 +35,7 @@
     "@theme-ui/color": "^0.16.1",
     "@theme-ui/components": "^0.16.1",
     "@theme-ui/match-media": "^0.16.1",
+    "@theme-ui/mdx": "^0.16.1",
     "@zeit/next-source-maps": "0.0.3",
     "chalk": "^4.1.0",
     "deepmerge": "^4.2.2",
