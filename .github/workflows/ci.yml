@@ -2,12 +2,15 @@ name: Test and Build
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
+    paths-ignore:
+      - '**/README.md'
+      - '**/LICENSE'
+      - '**/.gitignore'
+  release:
+    types: [published]
 
 concurrency:
-  group: test-${{ github.ref_name }}-${{ github.event_name }}
+  group: test-build-${{ github.ref_name }}
   cancel-in-progress: true
 
 jobs:
