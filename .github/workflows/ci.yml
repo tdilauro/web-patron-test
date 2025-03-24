@@ -158,19 +158,20 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Print PR Head SHA
-        run: echo "PR Head SHA - ${{ github.event.pull_request.head.sha }}"
-
       - name: Generate tags for Docker image
         id: docker-image-tags
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY_HOST }}/${{ github.repository_owner }}/${{ github.event.repository.name }}
           tags: |
-            type=semver,pattern={{major}}.{{minor}},priority=10
-            type=semver,pattern={{version}},priority=20
             type=ref,event=branch,priority=30
             type=sha,priority=40
+
+      - name: Print PR Head SHA
+        run: echo "PR Head SHA - ${{ github.event.pull_request.head.sha }}"
+
+      - name: Print image tags
+        run: echo "${{ steps.image-tags.outputs.tags }}"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
