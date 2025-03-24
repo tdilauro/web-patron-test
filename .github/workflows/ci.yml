@@ -7,7 +7,7 @@ on:
     types: [published]
 
 concurrency:
-  group: test-${{ github.ref_name }}-${{ github.event_name }}
+  group: test-build-${{ github.ref_name }}
   cancel-in-progress: true
 
 jobs:
