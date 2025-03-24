@@ -56,7 +56,8 @@ jobs:
     env:
       CI: true
     steps:
-      - uses: actions/checkout@v4
+      - name: Reset Git State
+        run: git reset --hard && git clean -fdx
 
       - uses: actions/setup-node@v4
         with: { node-version: "${{ needs.node_setup.outputs.node_version }}" }
@@ -85,7 +86,8 @@ jobs:
     env:
       CI: true
     steps:
-      - uses: actions/checkout@v4
+      - name: Reset Git State
+        run: git reset --hard && git clean -fdx
 
       - uses: actions/setup-node@v4
         with: { node-version: "${{ needs.node_setup.outputs.node_version }}" }
@@ -114,7 +116,8 @@ jobs:
     env:
       CI: true
     steps:
-      - uses: actions/checkout@v4
+      - name: Reset Git State
+        run: git reset --hard && git clean -fdx
 
       - uses: actions/setup-node@v4
         with: { node-version: "${{ needs.node_setup.outputs.node_version }}" }
