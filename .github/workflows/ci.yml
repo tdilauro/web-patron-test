@@ -148,6 +148,10 @@ jobs:
     env:
       REGISTRY_HOST: ghcr.io
       IMAGE_PUSH_ENABLED: ${{ secrets.NO_DOCKER_IMAGE == null }}
+      # This gets us a real SHA for the SHA tag, instead of an ethereal one. See:
+      # - https://github.com/docker/metadata-action?tab=readme-ov-file#environment-variables
+      # - https://github.com/docker/metadata-action/issues/206
+      DOCKER_METADATA_PR_HEAD_SHA: true
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -164,6 +168,8 @@ jobs:
         with:
           images: ${{ env.REGISTRY_HOST }}/${{ github.repository_owner }}/${{ github.event.repository.name }}
           tags: |
+            # Branch name, when in PR context.
+            type=raw,value={{github.event.pull_request.head.ref}},enable=${{ github.event_name == 'pull_request' }}
             type=ref,event=branch,priority=30
             type=sha,priority=40
 
