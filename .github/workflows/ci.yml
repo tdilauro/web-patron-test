@@ -1,8 +1,11 @@
 name: Test and Build
 
 on:
-  push: []
-  pull_request: []
+  push:
+    paths-ignore:
+      - '**/README.md'
+      - '**/LICENSE'
+      - '**/.gitignore'
   release:
     types: [published]
 
