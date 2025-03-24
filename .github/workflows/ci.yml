@@ -6,11 +6,9 @@ on:
       - '**/README.md'
       - '**/LICENSE'
       - '**/.gitignore'
-  release:
-    types: [published]
 
 concurrency:
-  group: test-build-${{ github.ref_name }}
+  group: test-build-${{ github.ref_name }}-${{ github.event_name }}
   cancel-in-progress: true
 
 jobs:
