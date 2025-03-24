@@ -16,6 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Needed for git describe --tags and short SHA
 
       - id: nvmrc
         run: echo "NODE_VERSION=$(cat .nvmrc)" >> $GITHUB_OUTPUT
@@ -37,21 +39,31 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Generate tags for web-patron image
-        id: web-patron-tags
+      - name: Generate tags for Docker image
+        id: docker-image-tags
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY_HOST }}/${{ github.repository_owner }}/web-patron
+          images: ${{ env.REGISTRY_HOST }}/${{ github.repository_owner }}/${{ github.event.repository.name }}
           tags: |
             type=semver,pattern={{major}}.{{minor}},priority=10
             type=semver,pattern={{version}},priority=20
             type=ref,event=branch,priority=30
             type=sha,priority=40
 
-      - name: Build and push web-patron image
+      - name: Cache Docker layers
+        uses: actions/cache@v4
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
           context: .
           file: ./Dockerfile
           push: ${{ env.IMAGE_PUSH_ENABLED }}
-          tags: ${{ steps.web-patron-tags.outputs.tags }}
+          tags: ${{ steps.docker-image-tags.outputs.tags }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
