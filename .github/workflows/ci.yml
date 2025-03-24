@@ -138,9 +138,12 @@ jobs:
         with:
           fetch-depth: 0 # Needed for short SHA
 
-      - name: Extract branch name segment
-        id: branch-name-segment
-        run: echo "BRANCH_SEGMENT=$(basename ${{ github.head_ref }})" >> $GITHUB_OUTPUT
+      - id: nvmrc
+        run: echo "NODE_VERSION=$(cat .nvmrc)" >> $GITHUB_OUTPUT
+
+      - name: Use Node Version from nvmrc
+        uses: actions/setup-node@v4
+        with: { node-version: "${{ steps.nvmrc.outputs.NODE_VERSION }}" }
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
